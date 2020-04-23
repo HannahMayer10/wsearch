@@ -1,10 +1,19 @@
 import { Component } from '@angular/core';
+import { WikipediaService } from './wikipedia.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'wsearch';
+  result=[];
+  constructor(private wikipedia: WikipediaService) {}
+
+  onSubmit(input: string) {
+    this.wikipedia.search(input).subscribe((response: any) => {
+      console.log(response.query.search);
+      this.result = response.query.search;
+    });
+  }
 }
